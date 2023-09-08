@@ -134,23 +134,35 @@ int main(int argc, char const *argv[])
                 perror("send");
             
             /// receive code part commented out for now
-            // int numbytes;
-             char *buf[256];
-            // if ((numbytes = recv(sockfd, buf, 256, 0)) == -1) {
-            //     perror("recv");
-            //     exit(1);
-            // }
+            while (1){
+                //printf("trying to recv from client");
+                int numbytes = 0;
+                char *buf[256];
+                numbytes = recv(new_fd, buf, 256, 0);
 
-            //buf[numbytes] = '\0';
+                //buf[numbytes] = '\0';
+                //printf("%d",numbytes);
+                if (numbytes>0){
+                    printf("sever: received '%s'\n",buf);
+                }
+                
+                if (numbytes>1){
+                    //printf("server received %s from client", buf);
+                    int bytes_sent;
+                    if ((bytes_sent = send(new_fd, buf, 256, 0)) == -1) {
+                        perror("send");
+                        printf("exiting");
+                        exit(1);
+                    }
 
-            //printf("sever: received '%s'\n",buf);
+                }
+                
 
-            int bytes_sent;
-            if ((bytes_sent = send(sockfd, buf, 256, 0)) == -1) {
-                perror("send");
-                exit(1);
             }
-            //close(new_fd);
+
+
+            
+            close(new_fd);
             exit(0);
         }
         close(new_fd);  // parent doesn't need this

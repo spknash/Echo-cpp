@@ -89,6 +89,7 @@ int main(int argc, char const *argv[])
     
 
     while (1) {
+
         if ((numbytes = recv(sockfd, buf, MAXDATASIZE-1, 0)) == -1) {
             perror("recv");
             exit(1);
@@ -96,7 +97,8 @@ int main(int argc, char const *argv[])
 
         buf[numbytes] = '\0';
 
-        printf("client: received '%s'\n",buf);
+        printf("client: received '%s' from server\n",buf);
+        
         char buffer[256];
         printf("Enter a message: ");
         
@@ -115,7 +117,7 @@ int main(int argc, char const *argv[])
         if (strcmp(buffer, "exit") == 0) {
             break;
         }
-        printf("%s", buffer);
+        //printf("%s\n", buffer);
 
         // send the message
         int bytes_sent;
