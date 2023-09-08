@@ -132,16 +132,18 @@ int main(int argc, char const *argv[])
             close(sockfd); // child doesn't need the listener
             if (send(new_fd, "Hello! welcome to echo server. Type something and I'll type the exact same thing back. How exciting!!", 256, 0) == -1)
                 perror("send");
-            int numbytes;
-            char *buf[256];
-            if ((numbytes = recv(sockfd, buf, 256, 0)) == -1) {
-                perror("recv");
-                exit(1);
-            }
+            
+            /// receive code part commented out for now
+            // int numbytes;
+             char *buf[256];
+            // if ((numbytes = recv(sockfd, buf, 256, 0)) == -1) {
+            //     perror("recv");
+            //     exit(1);
+            // }
 
-            buf[numbytes] = '\0';
+            //buf[numbytes] = '\0';
 
-            printf("sever: received '%s'\n",buf);
+            //printf("sever: received '%s'\n",buf);
 
             int bytes_sent;
             if ((bytes_sent = send(sockfd, buf, 256, 0)) == -1) {
